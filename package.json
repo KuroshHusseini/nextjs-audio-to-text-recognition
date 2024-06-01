@@ -1,7 +1,7 @@
 {
   "name": "nextjs-audio-to-text-recognition",
-  "version": "1.1.0",
-  "description": "This package will provide the necessary tool for user to connect to a next or any react application to record user audio and turn it to text.",
+  "version": "1.2.0",
+  "description": "Nextjs-audio-to-text-recognition is a React hook designed to facilitate real-time audio-to-text conversion using the Web Speech API's webkitSpeechRecognition. This hook listens to user voice input and converts it into text, making it easy to integrate speech recognition functionalities into your React applications.",
   "main": "useNextjsAudioToTextRecognition.js",
   "author": "Kurosh Husseini",
   "keywords": [
