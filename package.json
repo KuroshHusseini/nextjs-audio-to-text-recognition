@@ -1,29 +1,69 @@
 {
+  "version": "1.12.3",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "name": "nextjs-audio-to-text-recognition",
-  "version": "1.2.0",
-  "description": "Nextjs-audio-to-text-recognition is a React hook designed to facilitate real-time audio-to-text conversion using the Web Speech API's webkitSpeechRecognition. This hook listens to user voice input and converts it into text, making it easy to integrate speech recognition functionalities into your React applications.",
-  "main": "useNextjsAudioToTextRecognition.js",
   "author": "Kurosh Husseini",
+  "description": "Nextjs-audio-to-text-recognition is a React hook designed to facilitate real-time audio-to-text conversion using the Web Speech API's webkitSpeechRecognition. This hook listens to user voice input and converts it into text, making it easy to integrate speech recognition functionalities into your React applications.",
   "keywords": [
     "React.js",
     "Next.js",
     "Audio to text",
     "Speech to text"
   ],
-  "license": "ISC",
+  "module": "dist/nextjs-audio-to-text-recognition.esm.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "build": "tsc"
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": ">=16"
   },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/nextjs-audio-to-text-recognition.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/nextjs-audio-to-text-recognition.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "devDependencies": {
-    "@types/node": "^20.13.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
+    "@size-limit/preset-small-lib": "^11.1.4",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/dom-speech-recognition": "^0.0.4",
+    "@types/jest": "^29.5.12",
+    "@types/mocha": "^10.0.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "@types/react-speech-recognition": "^3.9.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-test-renderer": "^18.3.1",
+    "size-limit": "^11.1.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.6.2",
     "typescript": "^5.4.5"
-  },
-  "dependencies": {}
+  }
 }

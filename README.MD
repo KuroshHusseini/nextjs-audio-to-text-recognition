@@ -4,16 +4,19 @@ Nextjs-audio-to-text-recognition is a React hook designed to facilitate real-tim
 
 ### Installation
 
-`npm i nextjs-audio-to-text-recognition` or `yarn add nextjs-audio-to-text-recognition`
+`npm i nextjs-audio-to-text-recognition`<br/>
+`yarn add nextjs-audio-to-text-recognition`
 
 ### Usage
 
 ```
+import {useNextjsAudioToTextRecognition} from "nextjs-audio-to-text-recognition";
+
+
 function MyComponent() {
 const {
 isListening,
 transcript,
-setTranscript,
 startListening,
 stopListening,
 } = useNextjsAudioToTextRecognition({ lang: 'en-US', continuous: true });
@@ -41,4 +44,3 @@ The hook accepts an `Options` object with the following properties:
 ## License
 
 MIT
-

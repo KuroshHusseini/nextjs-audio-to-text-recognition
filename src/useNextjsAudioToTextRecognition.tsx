@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 /**
  * useNextjsAudioToTextRecognition
@@ -14,24 +14,23 @@ interface Options {
   continuous?: boolean;
 }
 
-interface UseSpeechToTextReturn {
+interface UseNextjsAudioToTextRecognitionReturn {
   isListening: boolean;
   transcript: string;
-  setTranscript: (text: string) => void;
   startListening: () => void;
   stopListening: () => void;
 }
 
-const useNextjsAudioToTextRecognition = (
+export const useNextjsAudioToTextRecognition = (
   options: Options
-): UseSpeechToTextReturn => {
+): UseNextjsAudioToTextRecognitionReturn => {
   const [isListening, setIsListening] = useState<boolean>(false);
-  const [transcript, setTranscript] = useState<string>("");
+  const [transcript, setTranscript] = useState<string>('');
   const [recognition] = useState<SpeechRecognition | undefined>(() => {
     // Check webkitSpeechRecognition exists in window object
     if (
-      typeof window === "undefined" ||
-      !("webkitSpeechRecognition" in window)
+      typeof window === 'undefined' ||
+      !('webkitSpeechRecognition' in window)
     ) {
       return;
     }
@@ -42,11 +41,11 @@ const useNextjsAudioToTextRecognition = (
     const recognition = new SpeechRecognition();
 
     recognition.interimResults = options?.interimResults ?? true;
-    recognition.lang = options.lang ?? "en-US";
+    recognition.lang = options.lang ?? 'en-US';
     recognition.continuous = options.continuous ?? false;
 
     const grammar =
-      "#JSGF V1.0; grammer punctuation; public <punc> =. |, |? | | ; | : ;";
+      '#JSGF V1.0; grammer punctuation; public <punc> =. |, |? | | ; | : ;';
     const speechRecognitionList = new window.webkitSpeechGrammarList();
     speechRecognitionList.addFromString(grammar, 1);
     recognition.grammars = speechRecognitionList;
@@ -56,39 +55,43 @@ const useNextjsAudioToTextRecognition = (
 
   useEffect(() => {
     if (!recognition) {
-      throw new Error("ERROR: recognition does not exist!");
+      throw new Error('ERROR: recognition does not exist!');
     }
 
     const handleResult = (event: SpeechRecognitionEvent) => {
-      let text = "";
+      let text = '';
       for (let i = 0; i < event.results.length; i++) {
         text += event.results[i][0].transcript;
       }
       setTranscript(text);
     };
 
-    const handleError = (event: SpeechRecognitionErrorEvent) => {
-      console.log("Error occurred:", event.error);
-      console.log("Detailed error message:", event.message);
-      if (event.error === "aborted") {
-        throw new Error("ERROR: speech recognition was aborted.");
+    const handleError = (event: Event) => {
+      const speechRecognitionErrorEvent = event as SpeechRecognitionErrorEvent;
+      console.log('Error occurred:', speechRecognitionErrorEvent.error);
+      console.log(
+        'Detailed error message:',
+        speechRecognitionErrorEvent.message
+      );
+      if (speechRecognitionErrorEvent.error === 'aborted') {
+        throw new Error('ERROR: speech recognition was aborted.');
       }
       setIsListening(false);
     };
 
     const handleEnd = () => {
       setIsListening(false);
-      setTranscript("");
+      setTranscript('');
     };
 
-    recognition.addEventListener("result", handleResult);
-    recognition.addEventListener("error", handleError);
-    recognition.addEventListener("end", handleEnd);
+    recognition.addEventListener('result', handleResult);
+    recognition.addEventListener('error', handleError);
+    recognition.addEventListener('end', handleEnd);
 
     return () => {
-      recognition.removeEventListener("result", handleResult);
-      recognition.removeEventListener("error", handleError);
-      recognition.removeEventListener("end", handleEnd);
+      recognition.removeEventListener('result', handleResult);
+      recognition.removeEventListener('error', handleError);
+      recognition.removeEventListener('end', handleEnd);
     };
   }, [options.lang, options.continuous, recognition]);
 
@@ -109,10 +112,7 @@ const useNextjsAudioToTextRecognition = (
   return {
     isListening,
     transcript,
-    setTranscript,
     startListening,
     stopListening,
   };
 };
-
-module.exports = useNextjsAudioToTextRecognition;
